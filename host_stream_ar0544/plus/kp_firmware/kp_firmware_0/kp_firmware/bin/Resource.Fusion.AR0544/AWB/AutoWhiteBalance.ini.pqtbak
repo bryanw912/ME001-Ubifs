@@ -1,0 +1,194 @@
+[AWBCtrlOptions]
+	dwInitSyncNum = 1 
+	dwOpFrames = 1 ;frequency of calculation, 1: do calculation every frame.
+	dwStatisticsSrcType = 0 ; 0: single exposure; 2: two exposure statistics when AE-HDR is enabled.
+	dwLongExpThd = 128 ;(0, 255), valid Y thd. of long exposure frame, when there are two exposure stats.
+	dwAWBStableOffset = 23 ;(0, 255) 
+
+	dwLumaThreHigh = 90 ;Simple/Sensor Mode, exclude the brightest grids, if all luma-high grids -> keep previous wb results.
+	dwLumaThreLow = 20 ;Simple/Sensor Mode, if all luma-low grids -> keep previous wb results.
+	dwLumaThreUltraLow = 3 ;Simple/Sensor Mode, exclude the darkest grids.
+	dwLumaShiftBit = 4 ;Simple/Sensor Mode, recommend to fix the value.
+
+	dwSimpleModeMinGainR = 512 ;Simple Mode, (1, 8191)
+	dwSimpleModeMaxGainR = 8191 ;Simple Mode, (1, 8191)
+	
+	dwSimpleModeMinGainB = 512 ;Simple Mode, (1, 8191)
+	dwSimpleModeMaxGainB = 8191 ;Simple Mode, (1, 8191)
+
+	dwWhiteRange = 512 ;(unused), Auto Mode.
+	dwUVWhiteRange = 512 ;(unused), Auto Mode.
+	bAutoModeDebugPrint = 0 
+	
+	;;-------{CT Mode Only ------------------------------------------------------------------------------------
+	dwRefLumaThreHigh = 160 ;CT Mode, (0, 255)	, exclude the brightest grids in normal condition.
+	dwRefLumaThreLow = 30 ;CT Mode, (0, 255)	, reference for low light condition.
+	dwRefSimpleLumaHigh = 100 ;CT Mode, (0, 255)	, exclude the brightest grids in simple mechanism.
+	dwRefSimpleLumaLow = 5 ;CT Mode, (0, 255)	, exclude the darkest grids in simple mechanism.
+	dwRBTarDistLevel = 4 ;CT Mode, (0,   5)	, 0:disable. bigger-> looser standrd-> more valid grid.
+	dwUVTarDistLevel = 2 ;CT Mode, (0,   5)	, 0:disable. bigger-> looser standrd-> more valid grid.
+	dwRefLumaLowTolerence = 2 ;CT Mode, (0, 128)	, bigger->higher probability to be judged as dark condition.
+	dwRefCTModeDebugPrint = 0 ;CT Mode, (0,   8)	, debug msg.
+
+	;; [1] (0,1) enable advance-removal,
+	;; [2] (0~5) smaller->less valid grid,
+	;; [3] EV-Low,		[4] EV-High, 
+	;; [5] CT-Start,	[6] CT-End, 
+	;; [7-12]Preserved.
+	;;                 [1][2][3]EV-L [4]EV-H [5]CT1 [6]CT2
+	adwAdvanceRemoval = 0, 3, 350000, 500000, 3500, 10000, 0, 0, 0, 0, 0, 0 ; [12]
+	
+	;; [0] (0,1)	enable advance-adjust.
+	;; [1] (0~255)	raise the thd to update pre-gain. Bigger-> more reliable pre-gain. awb-stable-frame-count.
+	;; [2] (0~7)	raise the thd to update pre-gain. Bigger-> more reliable pre-gain. add-valid-wp-target.
+	;; [3] (0~7)	raise the thd  when gain-type changes from [pre-gain] to [new-gain]. add-valid-wp-target.
+	;; [4] (0~15)	increase speed when gain-type changes from [pre-gain] to [new-gain].
+	;; [5] (1~255)	default:6, normal lux grid number Thd. If normal_Lux_num < thd,  widen target distance.
+	;; [6] (0~12)	default:5, bit number to widen target distance.
+	;; [07-11]Preserved.
+	adwAdvanceAdjust = 1, 3, 3, 3, 1, 16, 5, 0, 0, 0, 0, 0 ; [12]
+	;;------- CT Mode Only}------------------------------------------------------------------------------------
+
+
+	;;-------{Flash Mode --------------------------------------------------------------------------------------
+	dwFlashCalGainStrength = 4 ;Flash Mode, (0, 8)
+	dwFlashEVShiftBit = 2 ;Flash Mode
+	dwFlashStatYShiftBit = 3 ;Flash Mode
+	dwFlashModeDebugPrint = 0 ;Flash Mode, (0, 4)
+	;;------- Flash Mode}--------------------------------------------------------------------------------------
+
+
+	;;-------{Sensor Mode -------------------------------------------------------------------------------------
+	;;[1]  scale offset, 	
+	;;[2-3]min/max scaleR,
+	;;[4-5]min/max scaleB,	
+	;;[6]  dbg msg(0, 1), 	;;[07-08]max gainR/B, 	
+	;;[9]  speed(1,16), 	;;[10-11]min gainR/B, 	
+	;;[12] tolerance(1,128), bigger->higher probability to be judged as dark condition.
+	adwSensorAWBParam = 30, 300, 10240, 300, 10240, 0, 6144, 6144, 6, 512, 512, 5 ; [12] SensorWB Mode
+	;;------- Sensor Mode}-------------------------------------------------------------------------------------
+
+
+[AWBCTCOptions]
+	;; (unused), Auto mode.
+	dwCTNodeNum = 5 
+	adwCTNode = 2300, 2800, 3800, 6500,10000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ;[40]
+	adwCTGainR = 1100, 1301, 1848, 2155, 2627,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ;[40]
+	adwCTGainB = 4059, 3335, 2655, 1692, 1308,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ;[40]
+	adwCTChromaU = 1695, 1730, 1785, 1928, 2039,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ;[40]
+	adwCTChromaV = 2058, 1992, 1849, 1795, 1721,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ;[40]
+
+	;; refCT Mode.
+	dwRefCTNodeNum = 10 
+	adwRefYNode = 130, 120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20 ;[12]
+	adwRefCTNode = 2000, 2520, 3000, 3640, 4000, 4720, 5500, 6500, 7505, 11880, 0, 0, 0, 0, 0 ;[15]
+	adwRefCTGainR = 871, 949, 1038, 1154, 1257, 1403, 1510, 1658, 1675, 1892, 0, 0, 0, 0, 0 ;[15]
+	adwRefCTGainB = 3994, 3817, 3706, 2668, 2551, 2387, 2081, 1882, 1798, 1479, 0, 0, 0, 0, 0 ;[15]
+
+	adwRefY00CTChromaU = 1138, 1169, 1135, 1363, 1360, 1439, 1551, 1585, 1644, 1846, 0, 0, 0, 0, 0 ;[15]
+	adwRefY01CTChromaU = 1214, 1265, 1262, 1392, 1389, 1485, 1568, 1624, 1660, 1847, 0, 0, 0, 0, 0 ;[15]
+	adwRefY02CTChromaU = 1283, 1312, 1327, 1431, 1443, 1506, 1608, 1659, 1692, 1861, 0, 0, 0, 0, 0 ;[15]
+	adwRefY03CTChromaU = 1346, 1372, 1353, 1454, 1498, 1573, 1626, 1691, 1722, 1884, 0, 0, 0, 0, 0 ;[15]
+	adwRefY04CTChromaU = 1377, 1428, 1404, 1530, 1570, 1593, 1661, 1745, 1771, 1897, 0, 0, 0, 0, 0 ;[15]
+	adwRefY05CTChromaU = 1455, 1503, 1457, 1579, 1613, 1680, 1693, 1768, 1806, 1920, 0, 0, 0, 0, 0 ;[15]
+	adwRefY06CTChromaU = 1502, 1547, 1525, 1618, 1640, 1711, 1735, 1789, 1838, 1925, 0, 0, 0, 0, 0 ;[15]
+	adwRefY07CTChromaU = 1564, 1596, 1624, 1696, 1718, 1730, 1773, 1813, 1842, 1936, 0, 0, 0, 0, 0 ;[15]
+	adwRefY08CTChromaU = 1628, 1642, 1661, 1733, 1748, 1766, 1808, 1850, 1867, 1954, 0, 0, 0, 0, 0 ;[15]
+	adwRefY09CTChromaU = 1694, 1706, 1722, 1781, 1792, 1810, 1855, 1882, 1896, 1968, 0, 0, 0, 0, 0 ;[15]
+	adwRefY10CTChromaU = 1762, 1772, 1774, 1833, 1841, 1853, 1889, 1914, 1937, 1982, 0, 0, 0, 0, 0 ;[15]
+	adwRefY11CTChromaU = 1837, 1843, 1850, 1886, 1896, 1897, 1914, 1946, 1956, 2000, 0, 0, 0, 0, 0 ;[15]
+
+	adwRefY00CTChromaV = 2372, 2267, 2169, 2025, 1926, 1815, 1743, 1605, 1612, 1509, 0, 0, 0, 0, 0 ;[15]
+	adwRefY01CTChromaV = 2346, 2247, 2141, 2025, 1931, 1832, 1753, 1642, 1630, 1508, 0, 0, 0, 0, 0 ;[15]
+	adwRefY02CTChromaV = 2320, 2261, 2132, 2019, 1940, 1849, 1778, 1675, 1663, 1549, 0, 0, 0, 0, 0 ;[15]
+	adwRefY03CTChromaV = 2298, 2216, 2149, 2031, 1941, 1866, 1788, 1706, 1695, 1601, 0, 0, 0, 0, 0 ;[15]
+	adwRefY04CTChromaV = 2302, 2203, 2133, 2015, 1953, 1881, 1810, 1757, 1749, 1646, 0, 0, 0, 0, 0 ;[15]
+	adwRefY05CTChromaV = 2265, 2184, 2126, 2030, 1966, 1907, 1829, 1777, 1767, 1708, 0, 0, 0, 0, 0 ;[15]
+	adwRefY06CTChromaV = 2257, 2163, 2117, 2032, 1968, 1919, 1855, 1813, 1803, 1733, 0, 0, 0, 0, 0 ;[15]
+	adwRefY07CTChromaV = 2244, 2179, 2091, 2027, 1981, 1928, 1879, 1836, 1834, 1749, 0, 0, 0, 0, 0 ;[15]
+	adwRefY08CTChromaV = 2198, 2148, 2098, 2032, 1988, 1939, 1900, 1858, 1853, 1798, 0, 0, 0, 0, 0 ;[15]
+	adwRefY09CTChromaV = 2173, 2132, 2090, 2037, 1997, 1956, 1929, 1888, 1885, 1838, 0, 0, 0, 0, 0 ;[15]
+	adwRefY10CTChromaV = 2149, 2115, 2082, 2039, 2007, 1972, 1949, 1920, 1898, 1875, 0, 0, 0, 0, 0 ;[15]
+	adwRefY11CTChromaV = 2121, 2096, 2072, 2040, 2017, 1989, 1965, 1951, 1948, 1921, 0, 0, 0, 0, 0 ;[15]
+
+	;; Flash mode
+	dwFlashDutyNodeNum = 11 ;mapping to flash_level of disp.ini
+	adwFlashGainR = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 0, 0, 0, 0 ;[15]	calibration data
+	adwFlashGainB = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 0, 0, 0, 0 ;[15]	calibration data
+
+[AWBPreferenceOptions]
+	bEnablePreferenceRatio = 0 ;	[0, 1]
+	adwPreferenceCT = 2300, 2800, 3200, 3800, 4000, 4600, 5000, 6500, 7500, 8500, 9000, 10000 ; [12] range:[1,20000]
+	adwPrefCTRatioR = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[1,8192]
+	adwPrefCTRatioB = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[1,8192]
+
+	adwPreferenceEV = 500, 1000, 3000, 5000, 7500, 10000, 25000, 50000, 75000, 100000, 500000, 1000000 ; [12] range:[1, 1,600,000,000]
+	adwPrefEVRatioR = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[1, 8192]
+	adwPrefEVRatioB = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[1, 8192]
+
+	;;-------------------------------------------------------------------------------------------------------
+	;; If the following flag "bEnableAdvanceRatio" is enabled, the above setting "bEnablePreferenceRatio" will be forcibly disabled.
+	;;-------------------------------------------------------------------------------------------------------
+	bEnableAdvanceRatio = 0 ; [0, 1] Do not support Flash-Mode.
+	adwAdvanceEV = 100, 1000, 2500, 5000, 7500, 10000, 15000, 50000, 100000, 500000, 5000000, 7000000 ; [12] range:[1, 1,600,000,000]
+	;;-------------------------------------------------------------------------------------------------------
+	adw02300KRatioR = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[1, 8192], 1024 means 1x ratio
+	adw02300KRatioB = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[1, 8192], 1024 means 1x ratio
+	;;-------------------------------------------------------------------------------------------------------
+	adw02800KRatioR = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1030, 1040, 1060, 1080, 1100 ; [12] range:[1, 8192], 1024 means 1x ratio
+	adw02800KRatioB = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[1, 8192], 1024 means 1x ratio
+	;;-------------------------------------------------------------------------------------------------------
+	adw04000KRatioR = 1024, 1024, 1024, 1024, 1024, 1024, 1030, 1030, 1060, 1070, 1080, 1100 ; [12] range:[1, 8192], 1024 means 1x ratio
+	adw04000KRatioB = 1024, 1024, 1024, 1024, 1024, 1024, 1000, 1000, 1000, 1000, 920, 900 ; [12] range:[1, 8192], 1024 means 1x ratio
+	;;-------------------------------------------------------------------------------------------------------
+	adw05000KRatioR = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1030, 1040 ; [12] range:[1, 8192], 1024 means 1x ratio
+	adw05000KRatioB = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1020, 1010, 1010 ; [12] range:[1, 8192], 1024 means 1x ratio
+	;;-------------------------------------------------------------------------------------------------------
+	adw06500KRatioR = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[1, 8192], 1024 means 1x ratio
+	adw06500KRatioB = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[1, 8192], 1024 means 1x ratio
+	;;-------------------------------------------------------------------------------------------------------
+	adw07500KRatioR = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1010 ; [12] range:[1, 8192], 1024 means 1x ratio
+	adw07500KRatioB = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1028, 1030 ; [12] range:[1, 8192], 1024 means 1x ratio
+	;;-------------------------------------------------------------------------------------------------------
+	adw10000KRatioR = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1000, 1000 ; [12] range:[1, 8192], 1024 means 1x ratio
+	adw10000KRatioB = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[1, 8192], 1024 means 1x ratio
+
+	;;-------------------------------------------------------------------------------------------------------
+	;; ONLY For sensor un-linearity in sensor-AWB mode.
+	;;-------------------------------------------------------------------------------------------------------
+	bEnableCompensationRatio = 0 ;
+	adwGainRatioTbl = 512, 614, 716, 819, 921, 1024, 1089, 1228, 1331, 1433, 1536, 1638 ; [12]
+	adwDiffRatioTbl = 1260, 1220, 1160, 1100, 1070, 1024, 1010, 980, 961, 941, 900, 883 ; [12]
+
+[AWBWeightingOptions]
+    bEnableLumaWeighting = 1 ; [0, 1]
+    bEnableColorVarWeighting = 1 ; [0, 1]                                                                                                                                                                        
+
+    dwWeightingType = 2 ; 0: luma wgt only; 1: color various wgt only; 2: Mix luma and color various wgt.
+    dwPartitionHorNum = 8 ; [1, 16]
+    dwPartitionVerNum = 8 ; [1, 16]
+	dwColorVarLevel = 3 ; [0, 5], larger number, easierly to determine that an object is solid color, default:3
+    
+                                           
+	adwLumaWeightingEV = 100, 1000, 2500, 5000, 7500, 10000, 15000, 50000, 100000, 500000, 5000000, 70000000 ; [12] range:[1, 1,600,000,000]
+	;;[0]
+	adw02300KWeighting = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[0, 8192]
+	;;[1]
+	adw02800KWeighting = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[0, 8192]
+	;;[2]
+	adw04000KWeighting = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[0, 8192]
+	;;[3]
+	adw05000KWeighting = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[0, 8192]
+	;;[4]
+	adw06500KWeighting = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[0, 8192]
+	;;[5]
+	adw07500KWeighting = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[0, 8192]
+	;;[6]
+	adw10000KWeighting = 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 ; [12] range:[0, 8192]
+                                                                                                                                                                                                                                                                   
+
+[AWBFlashOptions]
+	dwFlashState = 0 
+	dwPreFlashLevelIndex = 0 
+	dwMainFlashLevelIndex = 0 
+	bUpdateFlashAEWinPriority = 0 
