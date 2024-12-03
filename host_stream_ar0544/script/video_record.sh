@@ -7,7 +7,7 @@ count=`ps -ef |grep vrec |grep -v "grep" |wc -l`
     fi
 
 mkdir -p /tmp/vrecord/videoclips/
-mount /dev/mmcblk0 /tmp/vrecord/videoclips/
+mount /dev/mmcblk0p3 /tmp/vrecord/videoclips/
 
 cd ../plus/kp_firmware/kp_firmware_0/kp_firmware/bin/;
 export LD_LIBRARY_PATH=$(pwd)/../lib;
